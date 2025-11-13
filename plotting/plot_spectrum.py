@@ -28,7 +28,9 @@ def read_and_plot(ax,
 
 fig, ax = plt.subplots()
 
-read_and_plot(ax, "../output/0/0_TOA_flux_eclipse.dat", label='your first spectrum')
+read_and_plot(ax, "../output/0/0_TOA_flux_eclipse.dat", label='1x Solar', color='blue')
+read_and_plot(ax, "../output/1/1_TOA_flux_eclipse.dat", label='10x Solar', color='green')
+read_and_plot(ax, "../output/2/2_TOA_flux_eclipse.dat", label='100x Solar', color='red')
 
 ax.set(yscale='log', xlim=[0.25, 20], xscale='log', xlabel='wavelength ($\mu$m)', ylabel='flux (erg s$^{-1}$ cm$^{-3}$)')
 

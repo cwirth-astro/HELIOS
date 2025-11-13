@@ -4,6 +4,7 @@
 /source/__pycache__/
 /__pycache__/
 /.idea/
+*.zip
 
 /star_tool/input/
 /star_tool/output/

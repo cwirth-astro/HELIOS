@@ -22,9 +22,11 @@ def read_and_plot(ax, path, color='blue', shade='darkorange', label='', width=2,
 
 fig, ax = plt.subplots()
 
-read_and_plot(ax, "../output/0/0_tp.dat", label="your first TP-profile")
+read_and_plot(ax, "../output/0/0_tp.dat", label="1x Solar", color='blue', shade='lightblue')
+read_and_plot(ax, "../output/1/1_tp.dat", label="10x Solar", color='green', shade='lightgreen')
+read_and_plot(ax, "../output/2/2_tp.dat", label="100x Solar", color='red', shade='salmon')
 
-ax.set(ylim=[1e3, 1e-6], yscale='log', xlabel=r'temperature (K)', ylabel=r'pressure (bar)')
+ax.set(ylim=[1e0, 1e-6], yscale='log', xlabel=r'temperature (K)', ylabel=r'pressure (bar)')
 
 ax.legend(loc='best', frameon=True)
 

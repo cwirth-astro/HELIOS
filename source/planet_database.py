@@ -60,5 +60,14 @@ planet_lib["HD_209458b"] = Planet(R_p=1.380, R_p_unit="R_Jupiter",
                                metal_star=0.02
                                )  # references: Southworth (2010)
 
+planet_lib["TRAPPIST-1b"] = Planet(R_p=0.0996, R_p_unit="R_Jupiter",
+                                g_p=1080,
+                                a=0.012,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
 if __name__ == "__main__":
     print("This module stores information about planetary systems. No guarantee that anything here is remotely correct.")
