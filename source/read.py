@@ -1424,8 +1424,12 @@ class Read(object):
 
         # temperature and pressure from the chemical grid
         if self.fastchem_data is not None:
-            read_press = self.fastchem_data['Pbar']
-            read_temp = self.fastchem_data['Tk']
+            try:
+                read_press = self.fastchem_data['Pbar']
+                read_temp = self.fastchem_data['Tk']
+            except ValueError:
+                read_press = self.fastchem_data['pbar']
+                read_temp = self.fastchem_data['TK']
         else:
             read_press = npy.concatenate((self.fastchem_data_low['Pbar'], self.fastchem_data_high['Pbar']))
             read_temp = npy.concatenate((self.fastchem_data_low['Tk'], self.fastchem_data_high['Tk']))
@@ -1574,9 +1578,40 @@ class Read(object):
         if ("CIA" not in species.name) and (species.name != "H-_ff") and (species.name != "He-"):
 
             if self.fastchem_data is not None:
-                chem_vmr = self.fastchem_data[species.fc_name]
+                try:
+                    chem_vmr = self.fastchem_data[species.fc_name]
+                except (ValueError, KeyError):
+                    # fallback: sum all columns that start with fc_name + '_'
+                    prefix = species.fc_name + "_"
+                    names = [n for n in (getattr(self.fastchem_data.dtype, "names", []) or []) if n.startswith(prefix)]
+                    if not names:
+                        raise
+                    # sum matching fields
+                    chem_vmr = npy.zeros_like(self.fastchem_data[names[0]], dtype=float)
+                    for n in names:
+                        chem_vmr = chem_vmr + self.fastchem_data[n]
             else:
-                chem_vmr = npy.concatenate((self.fastchem_data_low[species.fc_name], self.fastchem_data_high[species.fc_name]))
+                try:
+                    chem_vmr = npy.concatenate((self.fastchem_data_low[species.fc_name], self.fastchem_data_high[species.fc_name]))
+                except (ValueError, KeyError):
+                    # fallback: sum matching columns in low/high and concatenate
+                    prefix = species.fc_name + "_"
+                    names_low = [n for n in (getattr(self.fastchem_data_low.dtype, "names", []) or []) if n.startswith(prefix)]
+                    names_high = [n for n in (getattr(self.fastchem_data_high.dtype, "names", []) or []) if n.startswith(prefix)]
+                    parts = []
+                    if names_low:
+                        sum_low = npy.zeros_like(self.fastchem_data_low[names_low[0]], dtype=float)
+                        for n in names_low:
+                            sum_low = sum_low + self.fastchem_data_low[n]
+                        parts.append(sum_low)
+                    if names_high:
+                        sum_high = npy.zeros_like(self.fastchem_data_high[names_high[0]], dtype=float)
+                        for n in names_high:
+                            sum_high = sum_high + self.fastchem_data_high[n]
+                        parts.append(sum_high)
+                    if not parts:
+                        raise
+                    chem_vmr = npy.concatenate(parts)
 
         elif ("CIA" in species.name) or (species.name == "H-_ff") or (species.name == "He-"):
 

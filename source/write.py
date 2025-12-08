@@ -105,8 +105,9 @@ class Write(object):
 
         cwd = os.getcwd()
 
-        source = cwd + "/" + read.param_file
-        destination = read.output_path +quant.name+"/" + quant.name + "_" + read.param_file
+        source = os.path.join(cwd, read.param_file)
+        param_basename = os.path.basename(read.param_file)
+        destination = os.path.join(read.output_path, quant.name, quant.name + "_" + param_basename)
 
         shutil.copyfile(source, destination)
 

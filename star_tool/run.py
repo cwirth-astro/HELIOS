@@ -42,12 +42,85 @@ star_of_interest = {
     "temp": 3293.7
 }
 
+WASP15 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/WASP15_spectrum.txt",
+    "name": "WASP15",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6372
+}
+
+KELT7 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/KELT7_spectrum.txt",
+    "name": "KELT7",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6768
+}
+
+HATP30 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/HATP30_spectrum.txt",
+    "name": "HATP30",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6304
+}
+
+NGTS2 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/NGTS2_spectrum.txt",
+    "name": "NGTS2",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6478
+}
+
+TrES4 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/TrES4_spectrum.txt",
+    "name": "TrES4",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6295
+}
+
+WASP94A = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/WASP94A_spectrum.txt",
+    "name": "WASP94A",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6170
+}
+
+WASP17 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/WASP17_spectrum.txt",
+    "name": "WASP17",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6650
+}
+
+HD149026 = {
+    "data_format": "ascii",
+    "source_file": "../input/spectra/HD149026_spectrum.txt",
+    "name": "HD149026",
+    "w_conversion_factor": 1e-7,
+    "flux_conversion_factor": 1e7,
+    "temp": 6147
+}
+
 # run the thing
 
-fc.main_loop(gj1214,
-             convert_to='r50_kdistr',
-             opac_file_for_lambdagrid="../input/opacity/r50_kdistr/H2O_opac_ip_kdistr.h5",
-             output_file="star_2022.h5",
-             plot_and_tweak='automatic',
-             save_ascii='no',
-             save_in_hdf5='yes')
+for star in [WASP15, KELT7, HATP30, NGTS2, TrES4, WASP94A, WASP17, HD149026]:
+    fc.main_loop(star,
+                convert_to='r50_kdistr',
+                opac_file_for_lambdagrid="../ktable/output/r50_kdistr/mixed/mixed_opac_kdistr.h5",
+                output_file=f"{star['name']}.h5",
+                plot_and_tweak='automatic',
+                save_ascii='no',
+                save_in_hdf5='yes')

@@ -3,13 +3,10 @@ NAME=test
 MIXFILE=vertical_mix
 
 # run the iteration for a sufficient number of iterations (e.g., 10)
-for i in {0..10..1}
+for i in {3..10..1}
 do
 	# run HELIOS first
-	python3 ./helios.py	-name ${NAME} \
-				-opacity_mixing on-the-fly \
-				-file_with_vertical_mixing_ratios ../your_chemistry_code_dir/output/${MIXFILE}_$i.txt \
-				-coupling_mode yes \
+	python3 ./helios.py	-parameter_file=param_trappist.dat \
 				-coupling_iteration_step $i
 
 	# stops iteration after convergence is found
@@ -24,6 +21,5 @@ do
 	fi
 
 	# run here your photochemical kinetics code
-	# --> read helios_main_dir/output/test/test_tp_coupling_$i.dat
-	# --> and produce vertical_mix_(($i+1)).txt so that it can be read next iteration step by HELIOS
+	/home/cwirth/FastChem/fastchem input/chemistry/fastchem_input/config.dat
 done

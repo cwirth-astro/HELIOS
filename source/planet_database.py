@@ -69,5 +69,77 @@ planet_lib["TRAPPIST-1b"] = Planet(R_p=0.0996, R_p_unit="R_Jupiter",
                                 metal_star=0.04
                                 )  # references: Agol et al. (2021)
 
+planet_lib["WASP-15b"] = Planet(R_p=1.408, R_p_unit="R_Jupiter",
+                                g_p=750,
+                                a=0.0499,
+                                T_star=6372,
+                                R_star=1.477,
+                                g_star=4.17,
+                                metal_star=-0.17
+                                )  # references: Bonomo et al. (2017)
+
+planet_lib["KELT-7b"] = Planet(R_p=1.496, R_p_unit="R_Jupiter",
+                                g_p=1541,
+                                a=0.04415,
+                                T_star=6768,
+                                R_star=1.81,
+                                g_star=4.5,
+                                metal_star=0.
+                                )  # references: Stassun et al. (2017)
+
+planet_lib["HAT-P-30b"] = Planet(R_p=1.417, R_p_unit="R_Jupiter",
+                                g_p=877.4,
+                                a=0.0419,
+                                T_star=6304,
+                                R_star=1.215,
+                                g_star=4.36,
+                                metal_star=0.13
+                                )  # references: Bonomo et al. (2017), Blazek et al. (2022)
+
+planet_lib["NGTS-2b"] = Planet(R_p=1.595, R_p_unit="R_Jupiter",
+                                g_p=720,
+                                a=0.0630,
+                                T_star=6478,
+                                R_star=1.702,
+                                g_star=4.20,
+                                metal_star=-0.06
+                                )  # references: Raynard et al. (2018)
+
+planet_lib["TrES-4b"] = Planet(R_p=1.838, R_p_unit="R_Jupiter",
+                                g_p=362.5,
+                                a=0.05159,
+                                T_star=6295,
+                                R_star=1.81,
+                                g_star=4.09,
+                                metal_star=0.28
+                                )  # references: Sozzetti et al. (2015)
+
+planet_lib["WASP-94Ab"] = Planet(R_p=1.58, R_p_unit="R_Jupiter",
+                                g_p=448.6,
+                                a=0.0554,
+                                T_star=6170,
+                                R_star=1.36,
+                                g_star=4.28,
+                                metal_star=0.26
+                                )  # references: Neveu-VanMalle et al. (2014)
+
+planet_lib["WASP-17b"] = Planet(R_p=1.932, R_p_unit="R_Jupiter",
+                                g_p=316.7,
+                                a=0.05151,
+                                T_star=6650,
+                                R_star=1.573,
+                                g_star=4.22,
+                                metal_star=-0.19
+                                )  # references: Anderson et al. (2010)
+
+planet_lib["HD149026b"] = Planet(R_p=0.74, R_p_unit="R_Jupiter",
+                                g_p=1720,
+                                a=0.0432,
+                                T_star=6147,
+                                R_star=1.497,
+                                g_star=4.20,
+                                metal_star=0.36
+                                )  # references: Sato et al. (2005)
+
 if __name__ == "__main__":
     print("This module stores information about planetary systems. No guarantee that anything here is remotely correct.")
