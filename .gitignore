@@ -5,6 +5,7 @@
 /__pycache__/
 /.idea/
 *.zip
+*.pdf
 
 /star_tool/input/
 /star_tool/output/

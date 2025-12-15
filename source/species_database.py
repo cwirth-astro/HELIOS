@@ -90,6 +90,8 @@ species_lib["HCl"] = Species_db(name="HCl", fc_name="Cl1H1", weight=36.46094)
 species_lib["NaCl"] = Species_db(name="NaCl", fc_name="Cl1Na1", weight=58.44277)
 species_lib["NaOH"] = Species_db(name="NaOH", fc_name="H1Na1O1", weight=39.99777)
 species_lib["SiS"] = Species_db(name="SiS", fc_name="S1Si1", weight=60.13)
+species_lib["KCl"] = Species_db(name="KCl", fc_name="Cl1K1", weight=74.5513)
+species_lib["HF"] = Species_db(name="HF", fc_name="F1H1", weight=20.00634)
 
 # neutral atoms
 species_lib["H"] = Species_db(name="H", fc_name="H", weight=1.007825)

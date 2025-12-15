@@ -364,13 +364,25 @@ class Comb(object):
 
             self.fastchem_data = npy.genfromtxt(param.fastchem_path + 'chem.dat',
                                                     names=True, dtype=None, skip_header=0, deletechars=" !#$%&'()*,./:;<=>?@[\]^{|}~")
+            if 'Pbar' not in self.fastchem_data.dtype.names and 'pbar' in self.fastchem_data.dtype.names:
+                self.fastchem_data = npy.lib.recfunctions.rename_fields(self.fastchem_data, {'pbar': 'Pbar'})
+            if 'Tk' not in self.fastchem_data.dtype.names and 'TK' in self.fastchem_data.dtype.names:
+                self.fastchem_data = npy.lib.recfunctions.rename_fields(self.fastchem_data, {'TK': 'Tk'})
         except OSError:
 
             self.fastchem_data_low = npy.genfromtxt(param.fastchem_path + 'chem_low.dat',
                                                     names=True, dtype=None, skip_header=0, deletechars=" !#$%&'()*,./:;<=>?@[\]^{|}~")
+            if 'Pbar' not in self.fastchem_data_low.dtype.names and 'pbar' in self.fastchem_data_low.dtype.names:
+                self.fastchem_data_low = npy.lib.recfunctions.rename_fields(self.fastchem_data_low, {'pbar': 'Pbar'})
+            if 'Tk' not in self.fastchem_data_low.dtype.names and 'TK' in self.fastchem_data_low.dtype.names:
+                self.fastchem_data_low = npy.lib.recfunctions.rename_fields(self.fastchem_data_low, {'TK': 'Tk'})
 
             self.fastchem_data_high = npy.genfromtxt(param.fastchem_path + 'chem_high.dat',
                                                      names=True, dtype=None, skip_header=0, deletechars=" !#$%&'()*,./:;<=>?@[\]^{|}~")
+            if 'Pbar' not in self.fastchem_data_high.dtype.names and 'pbar' in self.fastchem_data_high.dtype.names:
+                self.fastchem_data_high = npy.lib.recfunctions.rename_fields(self.fastchem_data_high, {'pbar': 'Pbar'})
+            if 'Tk' not in self.fastchem_data_high.dtype.names and 'TK' in self.fastchem_data_high.dtype.names:
+                self.fastchem_data_high = npy.lib.recfunctions.rename_fields(self.fastchem_data_high, {'TK': 'Tk'})
 
         # temperature and pressure from the chemical grid
         if self.fastchem_data is not None:

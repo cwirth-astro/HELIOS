@@ -10,7 +10,7 @@ individual species calculation =                no                             [
                                                             
 format =                                        k-distribution                  [k-distribution, sampling]                      (CL: Y)
 HELIOS-K output format =                        binary                          [binary, text]                                  (CL: Y)
-path to individual species file =               ./input/individual_species_1.dat  [file path]                                     (CL: Y)
+path to individual species file =               ./input/individual_species_3.dat  [file path]                                     (CL: Y)
 
 === === GRID === ===
 
@@ -29,8 +29,8 @@ mixed table production =                        yes                             
 
 === === COMBINING / WEIGHTING === ===
 
-path to final species file =                    ./input/mixed_species_table.dat       [file path]                                     (CL: Y)
-path to FastChem output =                       ../input/chemistry/lodders_m1/  [directory path]                                (CL: Y)
-mixed table output directory =                  ./output/r50_kdistr/mixed/      [directory path]                                (CL: Y)
+path to final species file =                    ./input/asplund_m3_species_table.dat       [file path]                                     (CL: Y)
+path to FastChem output =                       ../input/chemistry/asplund_m3/  [directory path]                                (CL: Y)
+mixed table output directory =                  ./output/r50_kdistr/mixed/asplund_m3/      [directory path]                                (CL: Y)
 units of mixed opacity table =                  CGS                             [CGS, MKS]                                      (CL: Y)
 

@@ -62,7 +62,61 @@ planet_lib["HD_209458b"] = Planet(R_p=1.380, R_p_unit="R_Jupiter",
 
 planet_lib["TRAPPIST-1b"] = Planet(R_p=0.0996, R_p_unit="R_Jupiter",
                                 g_p=1080,
-                                a=0.012,
+                                a=0.01154,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
+planet_lib["TRAPPIST-1c"] = Planet(R_p=0.0978, R_p_unit="R_Jupiter",
+                                g_p=1065,
+                                a=0.0158,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
+planet_lib["TRAPPIST-1d"] = Planet(R_p=0.0703, R_p_unit="R_Jupiter",
+                                g_p=612,
+                                a=0.02227,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
+planet_lib["TRAPPIST-1e"] = Planet(R_p=0.0821, R_p_unit="R_Jupiter",
+                                g_p=801,
+                                a=0.02925,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
+planet_lib["TRAPPIST-1f"] = Planet(R_p=0.09322, R_p_unit="R_Jupiter",
+                                g_p=932,
+                                a=0.03849,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
+planet_lib["TRAPPIST-1g"] = Planet(R_p=0.1007, R_p_unit="R_Jupiter",
+                                g_p=1015,
+                                a=0.04683,
+                                T_star=2556,
+                                R_star=0.121,
+                                g_star=5.240,
+                                metal_star=0.04
+                                )  # references: Agol et al. (2021)
+
+planet_lib["TRAPPIST-1h"] = Planet(R_p=0.06736, R_p_unit="R_Jupiter",
+                                g_p=560,
+                                a=0.06189,
                                 T_star=2556,
                                 R_star=0.121,
                                 g_star=5.240,
