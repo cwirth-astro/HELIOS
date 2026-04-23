@@ -700,8 +700,12 @@ def calculate_height_z(quant):
 
 def calc_add_heating_flux(quant):
     """ calculates the UV heating flux -- individual layers and added up to get the total additional atmospheric heating """
-
-    quant.F_add_heat_lay = quant.add_heat_dens * quant.delta_z_lay
+    if quant.add_heating_column_dimension == 3:
+        quant.F_add_heat_lay = quant.add_heat_dens * quant.delta_z_lay
+    elif quant.add_heating_column_dimension == 2:
+        quant.F_add_heat_lay = quant.add_heat_dens
+    elif quant.add_heating_column_dimension == 1:
+        quant.F_add_heat_lay = np.sum(quant.add_heat_dens) * (quant.delta_colmass) / np.sum(quant.delta_colmass)
 
     for i in range(quant.nlayer):
 

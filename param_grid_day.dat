@@ -13,15 +13,15 @@ See online documentation for a detailed explanation of each parameter --> https:
                                                
 === === GENERAL === ===
 
-name =                                                TRAPPIST-1c_EH3_night_5            [any string]                                 (CL: Y)
-output directory =                                    ./output/                       [directory path]                             (CL: Y)
-realtime plotting =                                   yes                             [yes, no, number > 0]                        (CL: Y)
-planet type =                                         rocky                             [rocky, gas, no_atmosphere]                  (CL: Y)
+name =                                                200K_EH3_day                    [any string]                                 (CL: Y)
+output directory =                                    ./output/grid_day/               [directory path]                             (CL: Y)
+realtime plotting =                                   no                              [yes, no, number > 0]                        (CL: Y)
+planet type =                                         rocky                           [rocky, gas, no_atmosphere]                  (CL: Y)
 
 === === GRID === ===
 
 TOA pressure [10^-6 bar] =                            1e-1                            [number > 0]                                 (CL: Y)
-BOA pressure [10^-6 bar] =                            5e5                             [number > 0]                                 (CL: Y)
+BOA pressure [10^-6 bar] =                            1e6                             [number > 0]                                 (CL: Y)
 
 === === ITERATION === ===
 
@@ -33,10 +33,10 @@ run type =                                            iterative                 
 
 scattering =                                          yes                             [yes, no]                                    (CL: Y)
 direct irradiation beam =                             no                              [yes, no]                                    (CL: Y)
-  no  --> f factor =                                  0.368                         [number: 0.25 - 1]                           (CL: Y)
-  yes --> stellar zenith angle [deg] =                89                              [number: 0 - 89]                             (CL: Y)
+  no  --> f factor =                                  0.431                           [number: 0.25 - 1]                           (CL: Y)
+  yes --> stellar zenith angle [deg] =                60                              [number: 0 - 89]                             (CL: Y)
 internal temperature [K] =                            30                              [number > 0]                                 (CL: Y)
-surface albedo =                                      0.2                             [file, number: 0 - 1]                        (CL: Y)
+surface albedo =                                      0.1                             [file, number: 0 - 1]                        (CL: Y)
   file --> path to albedo file =                      ./input/albedo.dat              [path to file]                               (CL: Y)
   file --> albedo file format =                       2 Wavelength micron             [#skip, wavel.col., wavel.unit[micron,cm,m]] (CL: N)
   file --> surface name =                             Feldspathic                     [column with surface data]                   (CL: Y)
@@ -45,7 +45,7 @@ rocky planet --> use f approximation formula =        no                        
 === === OPACITY MIXING === ===
 
 opacity mixing =                                      premixed                        [premixed, on-the-fly]                       (CL: Y)
-  premixed   --> path to opacity file =               ./ktable/output/r50_kdistr/mixed/asplund_m3/mixed_opac_kdistr.h5  [file path]                                  (CL: Y)
+  premixed   --> path to opacity file =               ./ktable/output/r50_kdistr/mixed/EH3/mixed_opac_kdistr.h5  [file path]                                  (CL: Y)
   on-the-fly --> path to species file =               ./input/species.dat             [file path]                                  (CL: Y)
   on-the-fly --> file with vertical mixing ratios =   ./input/vmr_mix.txt             [file path]                                  (CL: Y)
   on-the-fly --> vertical VMR file format =           1 Pressure cgs                  [#skip, press.col., press.unit[cgs,Pa,bar]]  (CL: N)
@@ -61,14 +61,14 @@ kappa value =                                         0.285714                  
 === === STELLAR AND PLANETARY PARAMETERS === ===
 
 stellar spectral model =                              blackbody                       [blackbody, file]                            (CL: Y)
-  file --> path to stellar spectrum file =            ./input/spectra/TRAPPIST-1c_day_spectrum.h5           [file path]                                  (CL: Y)
-  file --> dataset in stellar spectrum file =         /r50_kdistr/ascii/TRAPPIST-1c     [dataset]                                    (CL: Y)
-planet =                                              TRAPPIST-1c_night                    [manual, name of planet]                     (CL: Y)
-  manual --> surface gravity [cm s^-2] =              2000                            [number > 0]                                 (CL: Y)
-  manual --> orbital distance [AU] =                  0.0124                          [number > 0]                                 (CL: Y)
-  manual --> radius planet [R_Jup] =                  1                               [number > 0]                                 (CL: Y)
-  manual --> radius star [R_Sun] =                    1                               [number > 0]                                 (CL: Y)
-  manual --> temperature star [K] =                   0                               [number >= 0]                                (CL: Y)
+  file --> path to stellar spectrum file =            ./input/star_2022.h5            [file path]                                  (CL: Y)
+  file --> dataset in stellar spectrum file =         /r50_kdistr/phoenix/gj1214      [dataset]                                    (CL: Y)
+planet =                                              manual                    [manual, name of planet]                     (CL: Y)
+  manual --> surface gravity [cm s^-2] =              980                            [number > 0]                                 (CL: Y)
+  manual --> orbital distance [AU] =                  0.19125                         [number > 0]                                 (CL: Y)
+  manual --> radius planet [R_Jup] =                  0.0892                              [number > 0]                                 (CL: Y)
+  manual --> radius star [R_Sun] =                    0.3                               [number > 0]                                 (CL: Y)
+  manual --> temperature star [K] =                   3400                               [number >= 0]                                (CL: Y)
 
 === === CLOUDS === ===
 
@@ -118,9 +118,8 @@ number of prerun timesteps =                     0                          [num
 physical timestep [s] =                          no                         [no, number > 0]                                               (CL: Y)
   number --> runtime limit [s] =                 86400                      [number > timestep]                                            (CL: Y)
   number --> start from provided TP profile =    no                         [yes, no]                                                      (CL: Y)
-include additional heating =                     yes                         [yes, no]                                                      (CL: Y)
-  yes --> path to heating file =                 ./input/heating/TRAPPIST-1c_EH3_nightside_heating_rate_2.dat   [file path]                                                    (CL: Y)
-  yes --> heating file format =                  0 pressure bar heating_rate 1 [#skip, press.col., press.unit[cgs,Pa,bar], data, cgs factor]  (CL: N)
-  yes --> heating column dimension =             1                          [1, 2, 3]                                                         (CL: Y)
+include additional heating =                     no                         [yes, no]                                                      (CL: Y)
+  yes --> path to heating file =                 ./input/heating_file.txt   [file path]                                                    (CL: Y)
+  yes --> heating file format =                  1 Pressure cgs Heating 1e7 [#skip, press.col., press.unit[cgs,Pa,bar], data, cgs factor]  (CL: N)
 coupling --> write TP profile during run =       no                         [no, number > 0]                                               (CL: Y)
 coupling --> convergence criterion =             1e-4                       [number > 0]                                                   (CL: Y) 

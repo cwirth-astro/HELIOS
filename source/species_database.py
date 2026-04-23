@@ -92,6 +92,14 @@ species_lib["NaOH"] = Species_db(name="NaOH", fc_name="H1Na1O1", weight=39.99777
 species_lib["SiS"] = Species_db(name="SiS", fc_name="S1Si1", weight=60.13)
 species_lib["KCl"] = Species_db(name="KCl", fc_name="Cl1K1", weight=74.5513)
 species_lib["HF"] = Species_db(name="HF", fc_name="F1H1", weight=20.00634)
+species_lib["KOH"] = Species_db(name="KOH", fc_name="H1K1O1", weight=56.1056)
+species_lib["NaF"] = Species_db(name="NaF", fc_name="F1Na1", weight=41.98817)
+species_lib["KF"] = Species_db(name="KF", fc_name="F1K1", weight=58.1011)
+species_lib["PS"] = Species_db(name="PS", fc_name="P1S1", weight=62.97398)
+species_lib["PN"] = Species_db(name="PN", fc_name="N1P1", weight=44.981)
+species_lib["PH"] = Species_db(name="PH", fc_name="H1P1", weight=31.98)
+species_lib["AlF"] = Species_db(name="AlF", fc_name="Al1F1", weight=45.9711)
+species_lib["MgF"] = Species_db(name="MgF", fc_name="F1Mg1", weight=43.303)
 
 # neutral atoms
 species_lib["H"] = Species_db(name="H", fc_name="H", weight=1.007825)

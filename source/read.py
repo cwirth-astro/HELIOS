@@ -316,6 +316,7 @@ class Read(object):
         parser.add_argument('-start_from_provided_tp_profile', help='see documentation (https://heliosexo.readthedocs.io/en/latest/)', required=False)
         parser.add_argument('-include_additional_heating', help='see documentation (https://heliosexo.readthedocs.io/en/latest/)', required=False)
         parser.add_argument('-path_to_heating_file', help='see documentation (https://heliosexo.readthedocs.io/en/latest/)', required=False)
+        parser.add_argument('-heating_column_dimension', help='put 3 if heating is per unit volume, 2 if per unit area', required=False)
         parser.add_argument('-write_tp_profile_during_run', help='see documentation (https://heliosexo.readthedocs.io/en/latest/)', required=False)
         parser.add_argument('-convergence_criterion', help='see documentation (https://heliosexo.readthedocs.io/en/latest/)', required=False)
 
@@ -628,6 +629,9 @@ class Read(object):
                         quant.add_heating_file_data_name = column[9]
                         quant.add_heating_file_data_conv_factor = npy.float64(column[10])
 
+                    elif column[2] == "heating" and column[4] == "dimension":
+                        quant.add_heating_column_dimension = npy.int32(column[6])
+
                     elif column[0] == "coupling" and column[2] == "write" and column[3] == "TP":
                         write_tp_during_run = column[8]
 
@@ -874,6 +878,9 @@ class Read(object):
 
         if args.path_to_heating_file:
             quant.add_heating_path = args.path_to_heating_file
+
+        if args.heating_column_dimension:
+            quant.add_heating_column_dimension = npy.int32(args.heating_column_dimension)
 
         if args.write_tp_profile_during_run:
             write_tp_during_run = args.write_tp_profile_during_run

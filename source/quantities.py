@@ -112,6 +112,7 @@ class Store(object):
         self.add_heating_file_press_unit = None
         self.add_heating_file_data_name = None
         self.add_heating_file_data_conv_factor = None
+        self.add_heating_column_dimension = np.int32(3)
         self.no_atmo_mode = np.int32(0)
         self.physical_tstep = None
         self.runtime_limit = None

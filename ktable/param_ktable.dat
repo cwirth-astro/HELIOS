@@ -29,8 +29,8 @@ mixed table production =                        yes                             
 
 === === COMBINING / WEIGHTING === ===
 
-path to final species file =                    ./input/asplund_m3_species_table.dat       [file path]                                     (CL: Y)
-path to FastChem output =                       ../input/chemistry/asplund_m3/  [directory path]                                (CL: Y)
-mixed table output directory =                  ./output/r50_kdistr/mixed/asplund_m3/      [directory path]                                (CL: Y)
+path to final species file =                    ./input/EL3_species_table.dat       [file path]                                     (CL: Y)
+path to FastChem output =                       ../input/chemistry/EL3/  [directory path]                                (CL: Y)
+mixed table output directory =                  ./output/r50_kdistr/mixed/EL3/      [directory path]                                (CL: Y)
 units of mixed opacity table =                  CGS                             [CGS, MKS]                                      (CL: Y)
 
