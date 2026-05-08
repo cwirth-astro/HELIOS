@@ -811,6 +811,7 @@ class Compute(object):
                      quant.dev_delta_t_prefactor,
                      quant.dev_marked_red,
                      quant.dev_F_add_heat_lay,
+                     quant.dev_F_add_heat_sum,
                      quant.dev_F_smooth,
                      quant.dev_F_smooth_sum,
                      quant.nlayer,
@@ -916,6 +917,14 @@ class Compute(object):
                             hsfunc.calc_add_heating_flux(quant)
                             quant.dev_F_add_heat_lay = gpuarray.to_gpu(quant.F_add_heat_lay)
                             quant.dev_F_add_heat_sum = gpuarray.to_gpu(quant.F_add_heat_sum)
+                            if quant.iter_value % 500 == 0:
+                                total_heat = quant.F_add_heat_sum[quant.nlayer - 1]                                                                                                                                                    
+                                print("  [heat budget] total column heating = {:.4e} erg/cm2/s ({:.4e} W/m2)".format(                                                                                                                  
+                                    total_heat, total_heat * 1e-3))                                                                                                                                                                    
+                                print("  [heat budget] HELIOS P range: {:.3e} to {:.3e} bar".format(                                                                                                                                   
+                                    quant.p_lay[-1] / 1e6, quant.p_lay[0] / 1e6))                                                                                                                                                      
+                                print("  [heat budget] delta_z range: {:.3e} to {:.3e} cm".format(                                                                                                                                     
+                                    quant.delta_z_lay.min(), quant.delta_z_lay.max()))    
 
                     # cp is required for temp. iteration, but only for physical timestepping
                     if quant.physical_tstep != 0:
@@ -933,6 +942,10 @@ class Compute(object):
 
                     if quant.iter_value % 100 == 0:
                         print("Layers (& surface/BOA) converged: "+str(abortsum)+" out of "+str(quant.nlayer+1)+".")
+                        if quant.add_heating == 1:                                                                                                                                                                                 
+                            norm_py = quant.F_down_tot[quant.nlayer] + quant.F_intern + quant.F_add_heat_sum[quant.nlayer - 1]
+                            print("  [diag] kernel norm = {:.3e}  (F_down_TOA={:.3e}, F_intern={:.3e}, F_add_heat_total={:.3e})".format(                                                                                           
+                                norm_py, quant.F_down_tot[quant.nlayer], quant.F_intern, quant.F_add_heat_sum[quant.nlayer - 1])) 
 
                 # checks whether to continue the loop
                 condition1 = abortsum < quant.nlayer + 1  # including "ghost layer" below grid
@@ -945,6 +958,11 @@ class Compute(object):
                 # if surface reaches too high temperatures jump directly to convective loop, because there is no point really in continuing here
                 if quant.iter_value % 100 == 0:
                     quant.T_lay = quant.dev_T_lay.get()
+                    if hasattr(quant, '_T_lay_prev'):                                                                                                                                                                          
+                        max_dT = float(np.max(np.abs(quant.T_lay[:quant.nlayer] - quant._T_lay_prev)))
+                        worst = int(np.argmax(np.abs(quant.T_lay[:quant.nlayer] - quant._T_lay_prev)))                                                                                                                         
+                        print("  [T diag] max |delta_T| over last 100 iter: {:.4e} K at layer {:d}".format(max_dT, worst))                                                                                                     
+                    quant._T_lay_prev = quant.T_lay[:quant.nlayer].copy()   
                     condition2 = quant.T_lay[quant.nlayer] < quant.plancktable_dim * quant.plancktable_step - 2
                     if not condition2:
                         # if surface / BOA temperature exceeds plancktable grid, it means that there must be a huge temperature gradient at the bottom.
@@ -1128,6 +1146,16 @@ class Compute(object):
                     if quant.add_heating == 1:
                         if quant.iter_value % 10 == 0:
                             hsfunc.calc_add_heating_flux(quant)
+                            if quant.iter_value % 500 == 0:
+                                total_heat = quant.F_add_heat_sum[quant.nlayer - 1]                                                                                                                                                    
+                                print("  [heat budget] total column heating = {:.4e} erg/cm2/s ({:.4e} W/m2)".format(                                                                                                                  
+                                    total_heat, total_heat * 1e-3))                                                                                                                                                                    
+                                print("  [heat budget] HELIOS P range: {:.3e} to {:.3e} bar".format(                                                                                                                                   
+                                    quant.p_lay[-1] / 1e6, quant.p_lay[0] / 1e6))                                                                                                                                                      
+                                print("  [heat budget] delta_z range: {:.3e} to {:.3e} cm".format(                                                                                                                                     
+                                    quant.delta_z_lay.min(), quant.delta_z_lay.max()))    
+                                quant.dev_F_add_heat_lay = gpuarray.to_gpu(quant.F_add_heat_lay)
+                                quant.dev_F_add_heat_sum = gpuarray.to_gpu(quant.F_add_heat_sum)
                             quant.dev_F_add_heat_lay = gpuarray.to_gpu(quant.F_add_heat_lay)
                             quant.dev_F_add_heat_sum = gpuarray.to_gpu(quant.F_add_heat_sum)
 

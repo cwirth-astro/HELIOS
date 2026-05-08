@@ -272,7 +272,7 @@ def check_for_radiative_eq(quant):
                 local_F_net_diff = abs(quant.F_intern - quant.F_net[0])
 
             # check for criterion satisfaction
-            if local_F_net_diff < quant.rad_convergence_limit * (quant.F_down_tot[quant.nlayer] + quant.F_intern):
+            if local_F_net_diff < quant.rad_convergence_limit * (quant.F_down_tot[quant.nlayer] + quant.F_add_heat_sum[quant.nlayer-1] + quant.F_intern):
                 quant.converged[i] = 1
             else:
                 quant.marked_red[i] = 1
@@ -282,6 +282,16 @@ def check_for_radiative_eq(quant):
 
     if sum(quant.converged) == (quant.nlayer + 1) - sum(quant.conv_layer):
         criterion = 1
+
+    # if quant.iter_value % 100 == 1:                                                                                                                                                                            
+    #     norm = quant.F_down_tot[quant.nlayer] + quant.F_intern + quant.F_add_heat_sum[quant.nlayer - 1]                                                                                                        
+    #     print("  [convergence diag] norm = {:.3e}  (F_down={:.3e}, F_intern={:.3e}, F_add_heat_total={:.3e})".format(                                                                                          
+    #         norm, quant.F_down_tot[quant.nlayer], quant.F_intern, quant.F_add_heat_sum[quant.nlayer - 1]))                                                                                                     
+    #     worst_i = max(range(quant.nlayer + 1), key=lambda i: abs(quant.F_intern + (quant.F_add_heat_sum[i] + quant.F_smooth_sum[i] if i < quant.nlayer else 0) - quant.F_net[i+1 if i < quant.nlayer else 0])) 
+    #     worst_diff = abs(quant.F_intern + (quant.F_add_heat_sum[worst_i] + quant.F_smooth_sum[worst_i] if worst_i < quant.nlayer else 0) - quant.F_net[worst_i+1 if worst_i < quant.nlayer else 0])            
+    #     print("  [convergence diag] worst layer: {:d}, residual={:.3e}, threshold={:.3e}, ratio={:.3e}".format(                                                                                                
+    #         worst_i, worst_diff, quant.rad_convergence_limit * norm, worst_diff / (quant.rad_convergence_limit * norm) if norm > 0 else float('inf')))                                                         
+    #     print("  [convergence diag] layers not converged: {:d}".format(int(sum(quant.marked_red))))
 
     return criterion
 
@@ -311,10 +321,10 @@ def give_feedback_on_convergence(quant):
 
             interface_to_be_tested = int((start_layers[n] + end_layers[n] + 1) / 2)
 
-            local_F_net_diff = abs(quant.F_intern + quant.F_add_heat_sum[interface_to_be_tested - 1] - quant.F_net[interface_to_be_tested]) / (quant.F_down_tot[quant.nlayer] + quant.F_intern)
+            local_F_net_diff = abs(quant.F_intern + quant.F_add_heat_sum[interface_to_be_tested - 1] - quant.F_net[interface_to_be_tested]) / (quant.F_down_tot[quant.nlayer] + quant.F_add_heat_sum[quant.nlayer-1] + quant.F_intern)
             print("Radiative energy imbalance in intermediate rad. layers is {:.3e} and should be less than {:.1e}".format(local_F_net_diff, quant.rad_convergence_limit))
         else:
-            local_F_net_diff = abs(quant.F_intern + quant.F_add_heat_sum[quant.nlayer - 1] - quant.F_net[quant.nlayer]) / (quant.F_down_tot[quant.nlayer] + quant.F_intern)
+            local_F_net_diff = abs(quant.F_intern + quant.F_add_heat_sum[quant.nlayer - 1] - quant.F_net[quant.nlayer]) / (quant.F_down_tot[quant.nlayer] + quant.F_add_heat_sum[quant.nlayer-1] + quant.F_intern)
             print("Global energy imbalance is {:.3e} and should be less than {:.1e}".format(local_F_net_diff, quant.rad_convergence_limit))
 
 
@@ -1041,7 +1051,7 @@ def success_message(quant):
         print("  --> Incident TOA brightness temperature: {:g} K \n      Interior temperature: {:g} K".format(T_star_brightness, quant.T_intern),
               "\n      Outgoing (planetary) brightness temperature: {:g} K".format(T_planet_brightness))
 
-        relative_energy_imbalance = (quant.F_intern + quant.F_add_heat_sum[quant.ninterface - 2] + quant.F_smooth_sum[quant.ninterface - 2] - quant.F_net[quant.ninterface - 1]) / (quant.F_down_tot[quant.ninterface - 1] + quant.F_intern)
+        relative_energy_imbalance = (quant.F_intern + quant.F_add_heat_sum[quant.ninterface - 2] + quant.F_smooth_sum[quant.ninterface - 2] - quant.F_net[quant.ninterface - 1]) / (quant.F_down_tot[quant.ninterface - 1] + quant.F_intern + quant.F_add_heat_sum[quant.ninterface - 2])
 
         print("  --> Global energy imbalance: {:.3f}ppm (positive: too much uptake, negative: too much loss).".format(relative_energy_imbalance*1e6), "\n")
     # otherwise, just display physical timestep info

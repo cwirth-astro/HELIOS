@@ -2677,8 +2677,8 @@ __global__ void rad_temp_iter(
             combined_F_net_diff = F_intern - F_net[0];
             
             // use net flux of one layer above ground when not converged yet to avoid stuck convergence (ground layer and one layer above may become stuck in an circular loop otherwise)
-            if(abs(F_intern - F_net[1])/(F_down_tot[numlayers] + F_intern) > 0.5 * local_limit){ 
-                combined_F_net_diff = F_intern - F_net[1];
+            if(abs(F_intern + F_add_heat_sum[0] - F_net[1])/(F_down_tot[numlayers] + F_intern + F_add_heat_sum[numlayers-1]) > 0.5 * local_limit){ 
+                combined_F_net_diff = F_intern + F_add_heat_sum[0] - F_net[1];
             }
         }
 
@@ -2748,10 +2748,10 @@ __global__ void rad_temp_iter(
         tlay[i] = min(max(tlay[i],1.001), max_limit); 
         
         bool condition;
-        if(i < numlayers) condition = abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_intern) < local_limit;
-        if(i == numlayers) condition = abs(F_intern - F_net[0])/(F_down_tot[numlayers] + F_intern) < local_limit;
+        if(i < numlayers) condition = abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern) < local_limit;
+        if(i == numlayers) condition = abs(F_intern - F_net[0])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern) < local_limit;
         
-        //if(itervalue % 10 == 0 && i == 70) printf("layer: %d, criterion: %.4e, limit: %.4e \n", i, abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_intern), local_limit); // uncomment for criterion feedback
+        if(itervalue % 100 == 0 && i == 70) printf("layer: %d, criterion: %.4e, limit: %.4e \n", i, abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern), local_limit); // uncomment for criterion feedback
         
         // if condition is satisfied this layer signals its readiness to abort the iteration loop
         if (condition){
@@ -2777,6 +2777,7 @@ __global__ void conv_temp_iter(
         utype*  deltat_prefactor,
         int*    marked_red,
         utype*  F_add_heat_lay,
+        utype* 	F_add_heat_sum,
         utype*  F_smooth,
         utype*  F_smooth_sum,
         int 	numlayers,
@@ -2831,7 +2832,7 @@ __global__ void conv_temp_iter(
                     // uncomment for debugging info
                     // if (itervalue % 100 == 0) printf("Taking layer: %d for surface delta T \n", j);
                     
-                    combined_F_net_diff = F_intern - F_net[j+1]; // avoiding taking convective layers as net flux driver for surface temperature
+                    combined_F_net_diff = F_intern + F_add_heat_sum[j] - F_net[j+1]; // avoiding taking convective layers as net flux driver for surface temperature
                     break;
                 }
             }
