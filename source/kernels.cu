@@ -2751,7 +2751,7 @@ __global__ void rad_temp_iter(
         if(i < numlayers) condition = abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern) < local_limit;
         if(i == numlayers) condition = abs(F_intern - F_net[0])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern) < local_limit;
         
-        if(itervalue % 100 == 0 && i == 70) printf("layer: %d, criterion: %.4e, limit: %.4e \n", i, abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern), local_limit); // uncomment for criterion feedback
+        // if(itervalue % 100 == 0 && i == 70) printf("layer: %d, criterion: %.4e, limit: %.4e \n", i, abs(F_intern + F_add_heat_sum[i] + F_smooth_sum[i] - F_net[i+1])/(F_down_tot[numlayers] + F_add_heat_sum[numlayers-1] + F_intern), local_limit); // uncomment for criterion feedback
         
         // if condition is satisfied this layer signals its readiness to abort the iteration loop
         if (condition){

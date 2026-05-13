@@ -13,8 +13,8 @@ See online documentation for a detailed explanation of each parameter --> https:
                                                
 === === GENERAL === ===
 
-name =                                                1600K_EH3_night                    [any string]                                 (CL: Y)
-output directory =                                    ./output/grid_night/               [directory path]                             (CL: Y)
+name =                                                1600K_EH3_night_rad                    [any string]                                 (CL: Y)
+output directory =                                    ./output/grid_night_rad/               [directory path]                             (CL: Y)
 realtime plotting =                                   no                              [yes, no, number > 0]                        (CL: Y)
 planet type =                                         rocky                           [rocky, gas, no_atmosphere]                  (CL: Y)
 
@@ -33,7 +33,7 @@ run type =                                            iterative                 
 
 scattering =                                          yes                             [yes, no]                                    (CL: Y)
 direct irradiation beam =                             no                              [yes, no]                                    (CL: Y)
-  no  --> f factor =                                  0.35                           [number: 0.25 - 1]                           (CL: Y)
+  no  --> f factor =                                  0.15                           [number: 0.25 - 1]                           (CL: Y)
   yes --> stellar zenith angle [deg] =                89                              [number: 0 - 89]                             (CL: Y)
 internal temperature [K] =                            30                              [number > 0]                                 (CL: Y)
 surface albedo =                                      0.1                             [file, number: 0 - 1]                        (CL: Y)
@@ -118,7 +118,7 @@ number of prerun timesteps =                     0                          [num
 physical timestep [s] =                          no                         [no, number > 0]                                               (CL: Y)
   number --> runtime limit [s] =                 86400                      [number > timestep]                                            (CL: Y)
   number --> start from provided TP profile =    no                         [yes, no]                                                      (CL: Y)
-include additional heating =                     yes                         [yes, no]                                                      (CL: Y)
+include additional heating =                     no                         [yes, no]                                                      (CL: Y)
   yes --> path to heating file =                 ./input/heating/grid_night/1600K_EH3_night_heating_rate.dat   [file path]                                                    (CL: Y)
   yes --> heating file format =                  0 pressure bar heating_rate 1 [#skip, press.col., press.unit[cgs,Pa,bar], data, cgs factor]  (CL: N)
   yes --> heating column dimension =             2                          [2, 3]                                                         (CL: Y)
